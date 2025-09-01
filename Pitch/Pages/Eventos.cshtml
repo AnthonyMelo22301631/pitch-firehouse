@@ -1,91 +1,85 @@
-﻿@page
-@model Pitch.Pages.Eventos.EventosModel
-@using System.Security.Claims
-@{
-    ViewData["Title"] = "Eventos";
-    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-}
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Pitch.Models;
+using Pitch.Repositories;
+using System.Linq;
+using System.Threading.Tasks;
 
-<link rel="stylesheet" href="~/css/meus-eventos.css" />
-
-<div class="meus-eventos-wrapper container">
-    <div class="header-row">
-        <h1 class="titulo">🌍 Eventos</h1>
-    </div>
-
-    @if (!Model.ListaEventos.Any())
+namespace Pitch.Pages
+{
+    [Authorize]
+    [ValidateAntiForgeryToken]
+    public class EditarEventoModel : PageModel
     {
-        <div class="vazio card shadow-sm">
-            <div class="card-body text-center">
-                <h5 class="mb-2">Ainda não existem eventos cadastrados</h5>
-                <p class="mb-3 text-muted">Assim que os usuários criarem eventos, eles aparecerão aqui.</p>
-                <a class="btn btn-outline-light" asp-page="/CriacaoEventos">Criar Evento</a>
-            </div>
-        </div>
-    }
-    else
-    {
-        <div class="grid-eventos">
-            @foreach (var e in Model.ListaEventos)
+        private readonly IEventoRepository _eventoRepository;
+        private readonly UserManager<Users> _userManager;
+
+        public EditarEventoModel(IEventoRepository eventoRepository, UserManager<Users> userManager)
+        {
+            _eventoRepository = eventoRepository;
+            _userManager = userManager;
+        }
+
+        [BindProperty]
+        public Evento Evento { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync(int id)
+        {
+            var eventoDb = await _eventoRepository.BuscarPorIdAsync(id);
+            if (eventoDb == null) return NotFound();
+
+            // só o dono pode editar
+            var userId = _userManager.GetUserId(User);
+            if (eventoDb.UserId != userId) return Forbid();
+
+            Evento = eventoDb;
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int id) // id também vem pela rota
+        {
+            // Se o hidden não trouxe, usa o id da rota
+            if (Evento.Id == 0) Evento.Id = id;
+
+            if (Evento.Id == 0)
             {
-                <div class="evento-card card shadow hover-up">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="chip">@e.TipoFesta</div>
-                            @if (e.Cancelado)
-                            {
-                                <span class="badge bg-warning text-dark">cancelado</span>
-                            }
-                        </div>
-
-                        <h5 class="card-title mt-2">@e.TipoLugar</h5>
-
-                        <div class="linhas">
-                            <div class="linha">
-                                <span class="label">Data</span>
-                                <span class="valor">@e.DataEvento.ToString("dd/MM/yyyy")</span>
-                            </div>
-                            @if (!string.IsNullOrWhiteSpace(e.Servicos))
-                            {
-                                <div class="linha">
-                                    <span class="label">Serviços</span>
-                                    <span class="valor">@e.Servicos</span>
-                                </div>
-                            }
-                            <div class="linha">
-                                <span class="label">Criado por</span>
-                                <span class="valor">@e.Criador?.UserName</span>
-                            </div>
-                        </div>
-
-                        <!-- Ações -->
-                        <div class="mt-3 d-flex gap-2">
-                            <!-- Detalhes (comentários) -->
-                            <a asp-page="/DetalhesEvento" asp-route-id="@e.Id" class="btn btn-sm btn-info">
-                                Detalhes
-                            </a>
-
-                            <!-- Apenas o criador pode editar/cancelar (e só se não estiver cancelado) -->
-                            @if ((User.Identity?.IsAuthenticated ?? false) && e.UserId == currentUserId)
-                            {
-                                <a asp-page="/EditarEvento" asp-route-id="@e.Id"
-                                   class="btn btn-sm btn-warning @(e.Cancelado ? "disabled" : "")"
-                                   aria-disabled="@(e.Cancelado ? "true" : "false")">
-                                    Editar
-                                </a>
-
-                                <form method="post" asp-page="/CancelarEvento" asp-route-id="@e.Id" class="d-inline">
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Tem certeza que deseja cancelar este evento?')"
-                                            @(e.Cancelado ? "disabled" : null)>
-                                        Cancelar
-                                    </button>
-                                </form>
-                            }
-                        </div>
-                    </div>
-                </div>
+                ModelState.AddModelError("", "Id do evento não foi enviado.");
+                return Page();
             }
-        </div>
+
+            // ⚠️ Ignora validação dos campos que NÃO vêm no form (mas são Required no model)
+            ModelState.Remove("Evento.UserId");
+            ModelState.Remove("Evento.Criador");
+            ModelState.Remove("Evento.CriadorId");                 // se existir no seu model
+            ModelState.Remove("Evento.Criador.UserName");          // por garantia
+
+            if (!ModelState.IsValid)
+            {
+                // Mostra os erros restantes (ex.: campos realmente editáveis vazios)
+                TempData["err"] = string.Join(" | ",
+                    ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+                return Page();
+            }
+
+            var eventoDb = await _eventoRepository.BuscarPorIdAsync(Evento.Id);
+            if (eventoDb == null) return NotFound();
+
+            var userId = _userManager.GetUserId(User);
+            if (eventoDb.UserId != userId) return Forbid();
+
+            // Atualiza apenas os campos editáveis
+            eventoDb.TipoFesta = (Evento.TipoFesta ?? "").Trim();
+            eventoDb.Servicos = (Evento.Servicos ?? "").Trim();
+            eventoDb.TipoLugar = (Evento.TipoLugar ?? "").Trim();
+            eventoDb.DataEvento = Evento.DataEvento;
+
+            // O método do repositório PRECISA dar SaveChangesAsync()
+            await _eventoRepository.AtualizarAsync(eventoDb);
+
+            TempData["ok"] = "Evento atualizado com sucesso!";
+            return RedirectToPage("/DetalhesEvento", new { id = eventoDb.Id });
+        }
     }
-</div>
+}
