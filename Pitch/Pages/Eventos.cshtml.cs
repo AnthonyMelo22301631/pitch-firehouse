@@ -6,7 +6,7 @@ using Pitch.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Pitch.Pages.Eventos
+namespace Pitch.Pages
 {
     [Authorize]
     public class EventosModel : PageModel
