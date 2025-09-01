@@ -1,34 +1,56 @@
-﻿@page "{id:int}"
-@model Pitch.Pages.Eventos.EditarEventoModel
+@page "{id:int}"
+@model Pitch.Pages.EditarEventoModel
 @{
     ViewData["Title"] = "Editar Evento";
 }
 
-<h2>Editar Evento</h2>
+<link rel="stylesheet" href="~/css/meus-eventos.css" />
 
-<form method="post">
-    <input type="hidden" asp-for="EventoVm.Id" />
+<div class="container mt-4">
+    <h2 class="mb-3">✏️ Editar evento</h2>
 
-    <div class="mb-3">
-        <label>Tipo de Festa</label>
-        <input asp-for="EventoVm.TipoFesta" class="form-control" />
-    </div>
+    @* Mostra erros do ModelState (se tiver) *@
+    <div asp-validation-summary="All" class="text-danger mb-2"></div>
 
-    <div class="mb-3">
-        <label>Serviços</label>
-        <input asp-for="EventoVm.Servicos" class="form-control" />
-    </div>
+    @if (Model.Evento?.Cancelado ?? false)
+    {
+        <div class="alert alert-warning">⚠ Este evento está cancelado.</div>
+    }
 
-    <div class="mb-3">
-        <label>Tipo de Lugar</label>
-        <input asp-for="EventoVm.TipoLugar" class="form-control" />
-    </div>
+    <form method="post">
+        <input type="hidden" asp-for="Evento.Id" />
+        <input type="hidden" asp-for="Evento.UserId" />
+    
 
-    <div class="mb-3">
-        <label>Data do Evento</label>
-        <input asp-for="EventoVm.DataEvento" type="date" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label asp-for="Evento.TipoFesta" class="form-label"></label>
+            <input asp-for="Evento.TipoFesta" class="form-control" />
+            <span asp-validation-for="Evento.TipoFesta" class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn btn-success">Salvar</button>
-    <a asp-page="/Eventos/Eventos" class="btn btn-secondary">Voltar</a>
-</form>
+        <div class="mb-3">
+            <label asp-for="Evento.Servicos" class="form-label"></label>
+            <input asp-for="Evento.Servicos" class="form-control" />
+            <span asp-validation-for="Evento.Servicos" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Evento.TipoLugar" class="form-label"></label>
+            <input asp-for="Evento.TipoLugar" class="form-control" />
+            <span asp-validation-for="Evento.TipoLugar" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Evento.DataEvento" class="form-label"></label>
+            <input asp-for="Evento.DataEvento" type="date" class="form-control" />
+            <span asp-validation-for="Evento.DataEvento" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a asp-page="/Eventos" class="btn btn-secondary">Voltar</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
