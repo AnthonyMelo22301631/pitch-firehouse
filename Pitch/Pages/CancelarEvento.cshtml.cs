@@ -20,7 +20,7 @@ namespace Pitch.Pages
         {
             await _eventoRepository.CancelarAsync(id);
             TempData["ok"] = "Evento cancelado!";
-            return RedirectToPage("/Eventos/Eventos");
+            return RedirectToPage("/Eventos");
         }
     }
 }
