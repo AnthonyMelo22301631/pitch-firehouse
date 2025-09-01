@@ -1,0 +1,132 @@
+﻿@*
+    Pages/Shared/_Layout.cshtml (Razor Pages)
+*@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Pitch</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Pitch.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="d-flex flex-column min-vh-100 position-relative">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container">
+                <!-- BRAND -> Landing -->
+                <a class="navbar-brand text-orange-400" asp-area="" asp-page="/Landing">Pitch</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Alternar navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <!-- MENU À ESQUERDA (links públicos) -->
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-orange-400" asp-area="" asp-page="/Landing">Casa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-orange-400" asp-page="/Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-orange-400" asp-area="" asp-page="/Colaboradores">Colaboradores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-orange-400" asp-area="" asp-page="/CriacaoEventos">Criação Eventos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-orange-400" asp-area="" asp-page="/Eventos">Eventos</a>
+                        </li>
+                    </ul>
+
+                    <!-- ÁREA À DIREITA (auth + debug) -->
+                    <ul class="navbar-nav">
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <!-- Quando LOGADO: mostra Meus Eventos, Perfil e Sair -->
+                            <li class="nav-item">
+                                <a class="nav-link text-orange-400" asp-area="" asp-page="/MeusEventos">Meus Eventos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-orange-400" asp-area="" asp-page="/Perfil">Perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <form method="post" asp-page="/Account/Logout" asp-antiforgery="true" class="d-inline">
+                                    <button type="submit" class="btn btn-link nav-link text-orange-400 p-0 m-0 align-baseline">Sair</button>
+                                </form>
+                            </li>
+
+                            <!-- Badge de debug (pode remover depois) -->
+                            <li class="nav-item d-flex align-items-center ms-2">
+                                <span class="badge bg-success">Logado: @User.Identity.Name</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <!-- Quando DESLOGADO: mostra Entrar e Cadastrar -->
+                            <li class="nav-item">
+                                <a class="nav-link text-orange-400" asp-area="" asp-page="/Account/Login">Entrar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-orange-400" asp-area="" asp-page="/Account/Cadastro">Cadastrar</a>
+                            </li>
+
+                            <!-- Badge de debug (pode remover depois) -->
+                            <li class="nav-item d-flex align-items-center ms-2">
+                                <span class="badge bg-danger">Não autenticado</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <div class="container flex-grow-1">
+        <main role="main" class="pb-3">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show mt-3">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show mt-3">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+            }
+
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- FOOTER fixa no rodapé quando a página é curta -->
+    <footer class="border-top footer text-muted mt-auto">
+        <div class="container">
+            &copy; 2025 - Pitch - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Ativa tooltips e popovers
+        $(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="popover"]').popover();
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
