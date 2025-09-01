@@ -1,0 +1,121 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="hero-container">
+    <div class="video-background">
+        <iframe src="https://www.youtube.com/embed/lFTv-JGg1r0?autoplay=1&mute=1&loop=1&playlist=lFTv-JGg1r0&controls=0&showinfo=0&modestbranding=1"
+                frameborder="0"
+                allow="autoplay; fullscreen"
+                allowfullscreen>
+        </iframe>
+    </div>
+
+    <div class="overlay">
+        <h1 class="display-4">A DIFERENÇA ENTRE UM<br />EVENTO COMUM E UM<br />INESQUECÍVEL COMEÇA AQUI.</h1>
+    </div>
+
+    <div class="btn-container">
+        <a asp-page="/CriacaoEventos" class="btn-principal">CRIAR EVENTO ➜</a>
+    </div>
+</div>
+
+<section class="servicos">
+    <div class="grid-servicos">
+        <div class="card">
+            <div class="icon">💍</div>
+            <h3>CASAMENTOS</h3>
+            <p>Do altar à última dança — cuidamos de cada detalhe para transformar seu grande dia em um momento inesquecível.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🎂</div>
+            <h3>ANIVERSÁRIOS</h3>
+            <p>Festa boa começa com planejamento e termina com sorrisos. A gente acende a vela, você faz o pedido.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🥂</div>
+            <h3>EVENTOS</h3>
+            <p>Corporativos, temáticos ou comemorativos — o que importa é causar impacto. E nisso, somos especialistas.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🎓</div>
+            <h3>FORMATURAS</h3>
+            <p>Cada conquista merece ser vivida. A formatura não é o fim, é o começo da celebração — e a FireHouse cuida disso pra você.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">👶</div>
+            <h3>CHÁS DE REVELAÇÃO</h3>
+            <p>Não é só sobre azul ou rosa — é sobre celebrar com quem importa. E criar memórias desde o primeiro instante.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">✝️</div>
+            <h3>BATIZADOS</h3>
+            <p>Celebrar o início de uma nova vida com beleza e significado.</p>
+        </div>
+
+        <!-- NOVOS CARDS -->
+        <div class="card">
+            <div class="icon">🏆</div>
+            <h3>PREMIAÇÕES</h3>
+            <p>Reconhecer conquistas com estilo e emoção. Sua cerimônia será marcada pela excelência e impacto.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🎤</div>
+            <h3>SHOWS & PALESTRAS</h3>
+            <p>Do palco à plateia, cuidamos de cada detalhe para que sua mensagem ou apresentação seja inesquecível.</p>
+        </div>
+    </div>
+
+    <p class="nota-final">
+        ISSO É SÓ UMA AMOSTRA. O QUE A FIREHOUSE ENTREGA VAI MUITO ALÉM.
+    </p>
+</section>
+
+<!-- Importando fonte moderna do Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- SEÇÃO O QUE OFERECEMOS -->
+<section class="oferecemos">
+    <div class="oferecemos-container">
+        <!-- Texto da esquerda -->
+        <div class="oferecemos-texto">
+            <h2>O QUE OFERECEMOS?</h2>
+            <p>
+                Serviços de alta qualidade, feitos especialmente para você!
+                Fotos, eventos, festas, tudo que você imaginar para sua diversão e seu momento!
+            </p>
+            <a href="#servicos" class="btn-veja">VEJA O QUE PODEMOS FAZER POR VOCÊ →</a>
+        </div>
+
+        <!-- Lista da direita -->
+        <div class="oferecemos-lista">
+            <div>
+                <h3>PROFISSIONAIS ESPECIALIZADOS</h3>
+                <p>Conectamos você aos profissionais ideais para cada detalhe do evento — cerimonialistas, celebrantes, bartenders, decoradores e muito mais.</p>
+            </div>
+
+            <div>
+                <h3>CONVITES</h3>
+                <p>Seja digital ou impresso, conectamos você com designers especializados em transformar sua ideia em um convite que já dá o tom da festa.</p>
+            </div>
+
+            <div>
+                <h3>ILUMINAÇÃO E CENOGRAFIA</h3>
+                <p>Ambientes que impressionam. Cuidamos da ambientação com parceiros que dominam luz, cor e cenário — criando experiências visuais que marcam.</p>
+            </div>
+
+            <div>
+                <h3>DECORAÇÃO</h3>
+                <p>Transformamos ideias em cenários reais. Indicamos profissionais que vão criar um ambiente com personalidade, beleza e propósito — tudo no clima do seu evento.</p>
+            </div>
+        </div>
+    </div>
+</section>

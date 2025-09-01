@@ -1,0 +1,61 @@
+﻿@page
+@model Pitch.Pages.MeusEventosModel
+@{
+    ViewData["Title"] = "Meus Eventos";
+}
+
+<link rel="stylesheet" href="~/css/meus-eventos.css" />
+
+<div class="meus-eventos-wrapper container">
+    <div class="header-row">
+        <h1 class="titulo">📅 Meus Eventos</h1>
+        <a class="btn btn-primary btn-novo" asp-page="/CriacaoEventos/CriacaoEventos">+ Criar novo</a>
+    </div>
+
+    @if (!Model.ListaEventos.Any())
+    {
+        <div class="vazio card shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="mb-2">Você ainda não criou nenhum evento</h5>
+                <p class="mb-3 text-muted">Clique no botão abaixo para criar seu primeiro evento.</p>
+                <a class="btn btn-outline-light" asp-page="/CriacaoEventos/CriacaoEventos">
+                    Criar Evento
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="grid-eventos">
+            @foreach (var e in Model.ListaEventos)
+            {
+                <div class="evento-card card shadow hover-up">
+                    <div class="card-body">
+                        <div class="chip">@e.TipoFesta</div>
+
+                        <h5 class="card-title mt-2">@e.TipoLugar</h5>
+
+                        <div class="linhas">
+                            <div class="linha">
+                                <span class="label">Data</span>
+                                <span class="valor">@e.DataEvento.ToString("dd/MM/yyyy")</span>
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(e.Servicos))
+                            {
+                                <div class="linha">
+                                    <span class="label">Serviços</span>
+                                    <span class="valor">@e.Servicos</span>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="card-actions">
+                            <a class="btn btn-sm btn-outline-light" asp-page="/CriacaoEventos/CriacaoEventos">Duplicar</a>
+                            <a class="btn btn-sm btn-primary" asp-page="/Eventos/Detalhes" asp-route-id="@e.Id">Detalhes</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,106 @@
+﻿@page
+@model Pitch.Pages.CriacaoEventos.CriacaoEventosModel
+@{
+    ViewData["Title"] = "Criação de Eventos";
+}
+
+<link rel="stylesheet" href="~/css/CriacaoEventos.css" />
+
+<body>
+    <div class="container criacao-eventos-page">
+        <h1>Formulário para Contratação de Festas</h1>
+
+        @if (Model.hasData)
+        {
+            <div class="welcome-message">
+                <p>Olá!</p>
+                <p>Criamos o projeto do seu Evento, fique à vontade para contatar profissionais ou espere que eles vejam sua ideia e participem:</p>
+            </div>
+        }
+
+        <form method="post">
+            <fieldset>
+                <legend>Tipo de Festa</legend>
+                <div class="radio-group">
+                    <input type="radio" id="casamento" name="TipoFesta" value="casamento" checked>
+                    <label for="casamento">Casamento</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="aniversario" name="TipoFesta" value="aniversario">
+                    <label for="aniversario">Aniversário</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="formatura" name="TipoFesta" value="formatura">
+                    <label for="formatura">Formatura</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="corporativo" name="TipoFesta" value="corporativo">
+                    <label for="corporativo">Evento Corporativo</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="rave" name="TipoFesta" value="rave">
+                    <label for="rave">Rave/Festa Eletrônica</label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Serviços Desejados</legend>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="buffet" name="Servicos" value="Buffet">
+                    <label for="buffet">Buffet</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="animador" name="Servicos" value="Animador">
+                    <label for="animador">Animador</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="dj" name="Servicos" value="DJ">
+                    <label for="dj">DJ</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="brinquedos" name="Servicos" value="Brinquedos">
+                    <label for="brinquedos">Brinquedos</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="fotografo" name="Servicos" value="Fotografo">
+                    <label for="fotografo">Fotógrafo</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="decoracao" name="Servicos" value="Decoracao">
+                    <label for="decoracao">Decoração</label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Locais para Aluguel</legend>
+                <div class="radio-group">
+                    <input type="radio" id="casa_praia" name="TipoLugar" value="casa_praia">
+                    <label for="casa_praia">Casa de Praia</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="apartamento" name="TipoLugar" value="apartamento">
+                    <label for="apartamento">Apartamento</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="sitio" name="TipoLugar" value="sitio">
+                    <label for="sitio">Sítio</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="salao_festa" name="TipoLugar" value="salao_festa">
+                    <label for="salao_festa">Salão de Festas</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="hotel" name="TipoLugar" value="hotel">
+                    <label for="hotel">Hotel</label>
+                </div>
+
+                <div class="form-group">
+                    <label for="data_evento">Data do Evento:</label>
+                    <input type="date" id="data_evento" name="DataEvento">
+                </div>
+            </fieldset>
+
+            <input type="submit" value="Criar Evento" />
+        </form>
+    </div>
+</body>

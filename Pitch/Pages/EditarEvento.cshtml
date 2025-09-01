@@ -1,0 +1,34 @@
+﻿@page "{id:int}"
+@model Pitch.Pages.Eventos.EditarEventoModel
+@{
+    ViewData["Title"] = "Editar Evento";
+}
+
+<h2>Editar Evento</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="EventoVm.Id" />
+
+    <div class="mb-3">
+        <label>Tipo de Festa</label>
+        <input asp-for="EventoVm.TipoFesta" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Serviços</label>
+        <input asp-for="EventoVm.Servicos" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Tipo de Lugar</label>
+        <input asp-for="EventoVm.TipoLugar" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Data do Evento</label>
+        <input asp-for="EventoVm.DataEvento" type="date" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a asp-page="/Eventos/Eventos" class="btn btn-secondary">Voltar</a>
+</form>

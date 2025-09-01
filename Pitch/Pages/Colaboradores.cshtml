@@ -1,0 +1,93 @@
+﻿@page
+@model Pitch.Pages.ColaboradoresModel
+@{
+    ViewData["Title"] = "Colaboradores Disponíveis";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Colaboradores Disponíveis</h2>
+
+                    <!-- Barra de Busca -->
+                    <div class="mb-4">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nome, especialidade...">
+                    </div>
+
+                    <!-- Lista de Colaboradores -->
+                    <div class="row" id="colaboradoresList">
+                        @foreach (var colaborador in Model.Colaboradores)
+                        {
+                            <div class="col-md-6 mb-3 colaborador-card">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@colaborador.Nome</h5>
+                                        <p class="card-text text-muted">
+                                            <i class="fas fa-briefcase"></i> @colaborador.Especialidade
+                                        </p>
+                                        <p class="card-text">
+                                            <i class="fas fa-phone"></i> @colaborador.Telefone
+                                        </p>
+                                        <button class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#contatoModal"
+                                                data-nome="@colaborador.Nome"
+                                                data-telefone="@colaborador.Telefone">
+                                            Contatar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Contato -->
+<div class="modal fade" id="contatoModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Contatar <span id="nomeColaborador"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><i class="fas fa-phone"></i> <strong id="telefoneColaborador"></strong></p>
+                <hr>
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Mensagem</label>
+                        <textarea class="form-control" rows="3" placeholder="Digite sua mensagem..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Filtro de busca
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const termo = this.value.toLowerCase();
+            document.querySelectorAll('.colaborador-card').forEach(card => {
+                const textoCard = card.textContent.toLowerCase();
+                card.style.display = textoCard.includes(termo) ? 'block' : 'none';
+            });
+        });
+
+        // Modal de contato
+        const modalContato = document.getElementById('contatoModal');
+        modalContato.addEventListener('show.bs.modal', function(event) {
+            const botao = event.relatedTarget;
+            document.getElementById('nomeColaborador').textContent = botao.getAttribute('data-nome');
+            document.getElementById('telefoneColaborador').textContent = botao.getAttribute('data-telefone');
+        });
+    </script>
+}
