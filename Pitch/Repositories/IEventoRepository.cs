@@ -1,4 +1,4 @@
-﻿using Pitch.Models;
+using Pitch.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
