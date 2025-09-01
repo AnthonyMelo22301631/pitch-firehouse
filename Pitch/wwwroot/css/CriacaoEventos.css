@@ -1,0 +1,119 @@
+﻿/* ===== PÁGINA DE CRIAÇÃO DE EVENTOS ===== */
+
+.criacao-eventos-page {
+    background: #111; /* fundo escuro */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    max-width: 800px;
+    margin: 40px auto;
+    color: #fff;
+}
+
+    .criacao-eventos-page h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #ff4500;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+/* Mensagem após criação */
+.welcome-message {
+    background: rgba(0, 128, 0, 0.15);
+    border: 1px solid #2ecc71;
+    color: #2ecc71;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+/* Fieldsets */
+.criacao-eventos-page fieldset {
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background: #1a1a1a;
+    transition: border-color 0.3s;
+}
+
+    .criacao-eventos-page fieldset:hover {
+        border-color: #ff4500;
+    }
+
+.criacao-eventos-page legend {
+    font-weight: 600;
+    color: #ff4500;
+    padding: 0 8px;
+}
+
+/* Inputs agrupados */
+.radio-group,
+.checkbox-group {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .radio-group input,
+    .checkbox-group input {
+        transform: scale(1.2);
+        accent-color: #ff4500;
+    }
+
+    .radio-group label,
+    .checkbox-group label {
+        font-size: 1rem;
+        color: #ddd;
+    }
+
+/* Input de data */
+.form-group {
+    margin-top: 15px;
+}
+
+    .form-group label {
+        font-weight: 500;
+        color: #fff;
+    }
+
+    .form-group input[type="date"] {
+        display: block;
+        padding: 10px 14px;
+        border-radius: 6px;
+        border: 1px solid #444;
+        margin-top: 5px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 250px;
+        background: #222;
+        color: #fff;
+        transition: border 0.3s;
+    }
+
+        .form-group input[type="date"]:focus {
+            outline: none;
+            border: 1px solid #ff4500;
+        }
+
+/* Botão */
+.criacao-eventos-page input[type="submit"] {
+    background: #ff4500;
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: block;
+    margin: 20px auto 0;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+    .criacao-eventos-page input[type="submit"]:hover {
+        background: #e03e00;
+        transform: translateY(-2px);
+    }
