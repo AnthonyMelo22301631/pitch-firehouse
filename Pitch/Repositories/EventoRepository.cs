@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Pitch.Data;
 using Pitch.Models;
 using System.Collections.Generic;
@@ -49,7 +49,7 @@ namespace Pitch.Repositories
 
         public async Task AtualizarAsync(Evento evento)
         {
-            _context.Eventos.Update(evento);
+            _context.Entry(evento).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
