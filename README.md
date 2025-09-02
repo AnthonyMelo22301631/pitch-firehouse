@@ -5,6 +5,11 @@ Aplicação web para criação, listagem e gerenciamento de **eventos**. O proje
 **Repositório:** `https://github.com/AnthonyMelo22301631/pitch-firehouse`
 
 ---
+## 🎥 Vídeo da demonstração
+
+[Assista no YouTube](https://youtu.be/vxJovRZA4eg)
+
+---
 
 ## Integrantes
 - Anthony Marcelo Mendoza de Melo – 22301631
